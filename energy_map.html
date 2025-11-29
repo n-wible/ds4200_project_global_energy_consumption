@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Global Energy Mix (Fossil Fuel vs Renewable between 1980 & 2023)</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    #container {
+      max-width: 1100px;
+      margin: 20px auto;
+    }
+
+    #controls {
+      margin-bottom: 10px;
+    }
+
+    #year-label {
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    #tooltip {
+      position: absolute;
+      pointer-events: none;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 8px;
+      font-size: 12px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      visibility: hidden;
+      z-index: 10;
+    }
+    svg {
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <h2>Global Energy Mix (Fossil Fuel vs Renewable between 1980 & 2023)</h2>
+  <p>Dark Purple = low renewables (high fossil), Brighter Orange = high renewables.</p>
+
+  <div id="controls">
+    <label for="year-slider">Year:</label>
+    <input id="year-slider" type="range" min="1980" max="2023" value="1980" step="1">
+    <span id="year-label">1980</span>
+  </div>
+
+  <svg id="map" width="1000" height="550"></svg>
+
+  <div id="tooltip"></div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
