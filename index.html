@@ -1,10 +1,464 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Global Energy Transition – DS4200 Final Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-</body>
-</html>
+<header>
+  <div class="navbar">
+    <div>
+      <div class="nav-brand">Global Energy Transition</div>
+      <div class="nav-subtitle">DS4200 - Fall 2025</div>
+    </div>
+    <nav class="nav-links">
+      <a href="#introduction" class="active">Intro</a>
+      <a href="#data">Data</a>
+      <a href="#usenergytrend">US Energy Mix</a>
+      <a href="#energyindependencemap">Electricity Independence</a>
+      <a href="#s-curve">S-Curves</a>
+      <a href="#gdpvsenergy">GDP vs Renewables</a>
+      <a href="#globalenergymap">Global Energy Map</a>
+      <a href="#wrapups">Wrap-up</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- intro -->
+  <section id="introduction" class="section">
+    <h1>Global Energy Transition: Fossil Fuels to Renewables</h1>
+    <p>
+      This project will examine how the global energy system is shifting from fossil fuels
+      toward renewables using the <strong>Our World in Data Global Energy</strong>
+      dataset. Our focus will cover four research questions:
+    </p>
+    <ol class="tight">
+      <li>How has the <strong>United States'</strong> energy use evolved over time?</li>
+      <li>Which countries are <strong>electricity import-dependent</strong>, and how have they changed since 2000?</li>
+      <li>How do major renewable/alternative electricity generation technologies (solar, wind, nuclear, hydro, biofuels) differ in their
+          <strong>S-curve adoption</strong>?</li>
+      <li>How does a country’s <strong>GDP</strong> relate to its use of renewable energy?</li>
+    </ol>
+    <p>
+      Each tab addresses these questions with an interactive visualization.
+    </p>
+  </section>
+
+  <!-- data -->
+  <section id="data" class="section">
+    <h2>Data &amp; Methods</h2>
+
+    <div class="grid-2">
+      <div>
+        <h3>Core Dataset</h3>
+        <p>
+          Our dataset is <code>owid-energy-data.csv</code> from
+          <strong>Our World in Data</strong>. Each row represents a
+          country or region in a given year and includes demographic, economic,
+          and energy variables.
+        </p>
+        <ul class="tight">
+          <li><strong>Locations</strong>: 300+ countries/regions, from individual countries and regions such as “World” and “OECD”</li>
+          <li><strong>Time</strong>: Most countries have data from the 1960s–1970s through 2023, with some gaps, particularly for
+          developing nations</li>
+          <li><strong>Attributes</strong>:
+            <ul class="tight">
+              <li><strong>Demographics</strong>: Population, GDP</li>
+              <li><strong>Primary energy</strong>: Total energy, Fossil fuels, Renewables</li>
+              <li><strong>Electricity</strong>: Generation, Renewable share, Carbon intensity</li>
+              <li><strong>Trade</strong>: Net electricity Imports & Exports as share of demand</li>
+            </ul>
+          </li>
+        </ul>
+
+        <p>
+          The OWID energy dataset on Kaggle:
+        </p>
+        <p class="muted">
+          Energy Consumption Dataset by Our World in Data<br>
+          <a href="https://www.kaggle.com/datasets/whisperingkahuna/energy-consumption-dataset-by-our-world-in-data"
+             target="_blank">https://www.kaggle.com/datasets/whisperingkahuna/energy-consumption-dataset-by-our-world-in-data</a>
+        </p>
+
+        <p class="muted">
+          OWID docs and charts<br>
+          <a href="https://ourworldindata.org/energy" target="_blank">https://ourworldindata.org/energy</a><br>
+          <a href="https://ourworldindata.org/electricity-mix" target="_blank">https://ourworldindata.org/electricity-mix</a>
+        </p>
+      </div>
+
+      <div>
+        <h3>Dataset for Global Map</h3>
+        <p>
+          For the global renewable map, we constructed <code>energy_mix_1980_2023.csv</code>, which
+          stores each country’s <strong>primary energy mix</strong> by year:
+        </p>
+        <ul class="tight">
+          <li><strong>Years</strong>: 1980–2023, for countries with provided data</li>
+          <li><strong>Columns</strong>:
+            <code>iso_code</code>, <code>country</code>, <code>year</code>,
+            <code>renewables_share_energy</code>, <code>fossil_share_energy</code>,
+            <code>coal_share_energy</code>, <code>oil_share_energy</code>,
+            <code>gas_share_energy</code>
+          </li>
+            <li><strong>Logic</strong>:
+            If <code>fossil_share_energy</code> was missing, but
+            <code>renewables_share_energy</code> was available, we set
+            <code>fossil_share_energy = 100 − renewables_share_energy</code>
+            and dropped rows with missing key fields
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Patterns from the Data</h3>
+    <ul class="tight">
+      <li>
+        <strong>Steady rising Global demand</strong>. Total primary energy use grows linearly over the last four decades, with small dips connected to global recessions
+        and COVID-19. All transitions from fossil fuels will need to happen while demand is still increasing.
+      </li>
+      <li>
+        <strong>Fossil Fuels dominate, renewables 2x global share.</strong>
+        The global renewable share rises from roughly <strong>10% in 1980</strong> to
+        about <strong>20% in 2023</strong>, meaning that even after four decades,
+        around four-fifths of primary energy remains fossil-based. At this rate, the world will largely fall short of its
+          projected climate goals outlined by the UN and Paris Climate Agreement.
+      </li>
+      <li>
+        <strong>Patterns emerge across regions</strong>. Nordic and a few Latin American
+        countries now get 50% or more of their energy from renewables, while historically
+        fossil fuel-exporting economies have largely been stagnant.
+      </li>
+      <li>
+        <strong>Electricity is concentrated</strong>. A majority of countries trade electricity, usually fossil fuels,
+        but only ~61% of countries are within ±5% of self-sufficiency in imports.
+      </li>
+    </ul>
+  </section>
+
+  <!-- us trend map -->
+  <section id="usenergytrend" class="section">
+    <h2>US Energy Mix Over Time</h2>
+
+    <p>
+      This line chart compares <strong>renewable</strong> and
+      <strong>fossil fuel</strong> energy consumption in the United States from
+      the 1960s to 2023, in terawatt-hours (TWh)
+    </p>
+
+    <div class="viz-frame">
+      <iframe src="viz_us_trends.html" title="US renewable vs fossil energy consumption"></iframe>
+    </div>
+
+    <p class="note">
+      Interaction: hover over the lines to see the exact fuel consumption for the given year.
+      The red line is fossil fuels; green line is renewables.
+    </p>
+
+    <p>
+      The plot shows that US fossil fuel consumption has stayed high - above
+      <strong>14,000&nbsp;TWh</strong> for most of the period with slight declines from the late-2000s.
+        Renewables start from a relatively small share, but begin accelerating after 2005.
+      By 2023, renewables exceed <strong>3,000&nbsp;TWh</strong>, roughly 3-4x
+      its 1980 level, with fossil fuels still representing the majority of energy use. The US represents a common pattern among fossil-field exporting nations - rapid growth in
+      renewables layered on top of an existing fossil system, with slow renewable energy growth relative to fossil fuels.
+    </p>
+
+    <p><small>Altair Chart</small></p>
+  </section>
+
+  <!-- energy independence -->
+  <section id="energyindependencemap" class="section">
+    <h2>Electricity Independence - Net Imports as % of Demand</h2>
+
+    <p>
+      The choropleth map shows each country’s
+      <strong>net electricity imports as a % of domestic demand</strong>
+      from 2000 to 2023. Purple color represents net exporters, white self-sufficiency, orange net importers.
+    </p>
+
+    <div class="viz-frame">
+      <iframe src="viz_energy_independence.html"
+              title="Electricity independence map"></iframe>
+    </div>
+
+    <p class="note">
+      Interaction: use the slider or play/pause button to move across years. Hover to see net imports, total electricity
+      generation, and renewable share for the year.
+    </p>
+
+    <p>
+      A pattern within the global map is <strong>larger economies are more self-sufficient</strong> for electricity.
+      The United States only imports <strong>0.4% of its electricity demand</strong>
+      even though it is the <strong>4th-largest importer by volume</strong>, while China exports
+      <strong>0.1% of its electricity production</strong>. These country's size allows them to balance their grids and reduce exposure to international energy shocks.
+    </p>
+    <p>
+      In contrast, <strong>smaller countries are dependent on imports</strong> from others. Luxembourg
+      imports <strong>79%</strong> of its demand, Djibouti <strong>72%</strong>, and Afghanistan
+      <strong>87%</strong>. These countries may have high renewable shares, but their energy
+      relies on neighbouring nation's grids. Of <strong>173 countries</strong> in the data, <strong>105 (61%)</strong> fall within
+      ±5% of self-sufficiency, and the median country has <strong>0</strong> net imports, meaning half of all countries
+      are net exporters of energy.
+    </p>
+    <p>
+      The map also highlights some specific changes with smaller countries. Paraguay remains a large exporter, but its net exports
+      fell from <strong>~773%</strong> of domestic demand to a
+       <strong>~121%</strong> through the decades. Bhutan moves in the opposite direction, shifting from
+      exporting <strong>337%</strong> of its production to importing <strong>7%</strong>.
+      Not represented in the chart is how infrastructure and demand fluctuations change country’s energy position, particularly if they are smaller.
+    </p>
+
+    <p><small>Plotly Chart</small></p>
+  </section>
+
+  <!-- scurve -->
+  <section id="s-curve" class="section">
+    <h2>Renewable Adoption S-Curves</h2>
+
+    <p>
+      The multi-chart figure compares global electricity generation from
+      <strong>solar</strong>, <strong>wind</strong>, <strong>nuclear</strong>,
+      <strong>hydro</strong>, and <strong>biofuels</strong>. Each subplot overlays the
+      historical time series with a fitted S-curve projected until 2050, to show
+      where each technology appears along the adoption path.
+    </p>
+
+    <div class="viz-frame">
+      <iframe src="viz_scurve_tech.html"
+              title="S-curve panel for energy technologies"></iframe>
+    </div>
+
+    <p class="note">
+      Interaction: hover over the solid and dashed lines to see historical generation values and the fitted S-curve for each energy type. Click on the legend to add/remove an energy type from
+        the chart.
+    </p>
+
+    <p>
+      The biggest pattern from the S-curves is <strong>solar’s growth</strong> over the last two decades. Solar generation
+      was at <strong>0</strong> in 2000 but reached <strong>2,131&nbsp;TWh by 2023</strong>. Wind, which started in the late
+      1970s, now generates <strong>2,497&nbsp;TWh</strong>, only slightly more than solar. Solar
+      achieved the same growth as wind in half the time, making
+      it the fastest growth renewable-energy represented by the graphs.
+    </p>
+    <p>
+      Other technologies follow slower or plateauing trajectories on the S-curve. Hydroelectric grew
+      gradually from <strong>923&nbsp;TWh</strong> in 1965 to <strong>4,419&nbsp;TWh</strong> in 2023. Nuclear grew
+      from the 1970s through the 1990s at
+      <strong>2,700&nbsp;TWh</strong>, but has since stabilized. These disparities, particularly nuclear, represent how each energy type's S-curves are affected by economics, policy,
+      and public opinion, which were not represented in the dataset. Biofuels grew modestly in comparison with all other energy types, connecting to their geographic-influenced rate of usage.
+    </p>
+    <p>
+      The graphs suggest <strong>wind and solar</strong> are in the <strong>
+      growth phase</strong> of their respective S-curves, with no visible flattening with their technological maturity. Nuclear in particular is unclear as its growth was based on policy,
+      infrastructure, and social acceptance, of the respective era, with global adoption fluctuating after the end of the cold war.
+    </p>
+
+    <p><small>Plotly Chart</small></p>
+  </section>
+
+  <!-- gdp vs renewables -->
+  <section id="gdpvsenergy" class="section">
+    <h2>GDP vs Renewable Energy Share</h2>
+
+    <p>
+      The bubble chart plots each country’s <strong>GDP per capita</strong>
+      against their <strong>renewable share of primary energy</strong> for 2022. Bubble size is
+      total primary energy consumption, color is region.
+    </p>
+
+    <div class="viz-frame">
+      <iframe src="viz_gdp_renewables.html"
+              title="GDP vs renewable adoption scatter"></iframe>
+    </div>
+
+    <p class="note">
+      Interaction: hover over a bubble to see the country name, GDP per capita, renewable share,
+      and energy consumption. Use the legend to toggle regions on/off.
+    </p>
+
+    <p>
+      The chart shows <strong>no noticeable relationship</strong> between wealth and renewables as a share of total energy.
+      Countries with similar GDP per capita have renewable shares ranging
+      from 0% to 70%, representing a break from the notion that GDP, GDP per capita, or GDP growth determine a country's use of renewable energy.
+    </p>
+    <p>
+      Region-to-region patterns are present. In <strong>Northern Europe</strong>, high-income
+      countries such as Norway, Iceland, and Sweden have GDP per capita above
+      <strong>$50–60k</strong> with renewable shares in the <strong>50–70%</strong> range, while
+      other European nations with GDP per capita between <strong>$30–60k</strong> cluster by
+      <strong>10–40%</strong> renewable share, despite being in the same region. <strong>South America</strong> shows several lower-middle-income
+      outliers, with GDP per capita at a lower <strong>$15k</strong>, but renewable shares near
+      <strong>50%</strong>. This represents a break from the assumed high GDP to high renewables norm.
+    </p>
+    <p>
+      In <strong>Asia</strong>, larger energy consumers stand out as a result of their large populations.
+      China and India have lower renewable use at <strong>0–20%</strong> each, at
+      larger total consumptions, representing a heavier reliance on fossil fuels. This suggests there could be a relationship between population and scope of fossil fuel usage. The
+      <strong>Middle East</strong> presents as a cluster of high GDP per capita countries with
+      a lower renewable energy share. This region in particular uses oil and gas, which can be tied to their global presence in fossil fuel exports through OPEC.
+      <strong>North America</strong>, especially the US and Canada have higher energy
+      use but more modest renewable energy shares, with the US at <strong>11%</strong>. <strong>Africa</strong>
+      has lower overall energy usage, with renewable energy usage different across nation's borders. <strong>Oceania</strong> provides
+      another contrast, with Australia combining high GDP and low renewable share, and
+      smaller, Pacific nations having lower GDP and higher renewable shares comparatively.
+    </p>
+    <p>
+      From the data, we can identify that there is <strong> no direct correlation</strong> between a country's GPD & GDP per capita and renewables as a share of total energy usage.
+      Instead, smaller relationships could be found on a region to region basis, implying features not represented in the dataset,
+        such as <strong> culture, policy, and geographic differences </strong> may be a stronger indicator of renewable energy implementation.
+    </p>
+
+    <p><small>Plotly Chart</small></p>
+  </section>
+
+  <!-- global energy map -->
+  <section id="globalenergymap" class="section">
+    <h2>Global Renewable Energy Map</h2>
+
+    <p>
+      This map uses <code>energy_mix_1980_2023.csv</code> to show each country’s
+      <strong>renewable share of primary energy</strong> between 1980 and 2023. Dark purple
+      represents low renewable shares, bright orange indicates high renewable shares.
+    </p>
+
+    <div class="viz-frame">
+      <iframe src="energy_map.html"
+              class="d3-frame"
+              title="Global primary energy mix D3 map"></iframe>
+    </div>
+
+    <p class="note">
+      Interaction: drag the year slider to move through time.
+      Hover over a country to see its renewable share, fossil share, and split
+      between coal, oil, and gas.
+    </p>
+
+    <p>
+      The map summarizes over 40 years of the global energy transition. In the early 1980s, most of the
+      world is dark purple, with <strong>80% of primary energy coming from fossil
+      fuels</strong>, and having only <strong>0–20%</strong> renewables.
+      Over time, the colors in <strong>Western and Northern Europe</strong> and parts of
+      <strong>Latin America</strong> slowly brighten. By the mid-2000s, Nordic countries such
+      as Sweden and Norway, along with hydropowered nations in South America, show renewable
+      shares above <strong>50%</strong>.
+    </p>
+    <p>
+      The transition is much slower in other areas. Large parts of <strong>Asia, the Middle East,
+      and North America</strong> remain dark into the 2010s, reflecting a continuing
+      fossil-fuel dominance and reliance. Some African countries such as Kenya and Ethiopia brighten, while
+      others remain largely unchanged. The United States improves modestly but is still
+      darker than most of Europe in 2023.
+    </p>
+    <p>
+      Globally, the renewable share rises from <strong>10% in 1980</strong> to
+      <strong>20% in 2023</strong>, meaning that the world is still far from a renewable-dominated energy
+      system. Nordic countries show some of the largest improvements, with changes from
+      <strong>10–20%</strong> renewables in 1980 to over <strong>50%</strong> today, while
+      fossil fuel-exporting economies in the Middle East show the least change. Most
+      progress occurs from <strong>2000</strong> to <strong>2020</strong>, as the map brightens across
+      Europe, parts of China, Latin America, and a few Asian and African countries.
+    </p>
+
+    <p><small>D3.js Chart</small></p>
+  </section>
+
+  <!-- wrapup -->
+  <section id="wrapups" class="section">
+    <h2>Conclusions &amp; Future Work</h2>
+
+    <h3>Key Findings</h3>
+    <ul class="tight">
+      <li><strong>Renewables are growing, but still a small share of energy generation.</strong> Solar and wind have reached
+          the 2,000–2,500&nbsp;TWh production range in just a few decades, but fossil fuels still supply roughly
+          80% of global primary energy.</li>
+      <li><strong>Electricity independence is the norm, but not for smaller countries.</strong>
+          61% of countries are within ±5% of self-sufficiency, but a subset of small economies
+          import 70–80% of their energy needs, making them energy-dependent and unable to respond to possible global events and supply shocks.</li>
+      <li><strong>Energy-Technology lifecycles differ.</strong> Hydroelectric and nuclear energies show matured, plateauing
+          S-curves, while wind and solar are still in the rapidly growing.</li>
+      <li><strong>Wealth does not determine renewables usage.</strong> High-GDP countries are widely represented across all
+          renewable shares (0–70%), and no strong relationship can be found between a nation's wealth and their use of renewable energy.</li>
+      <li><strong>The global transition is geographically spread out.</strong> Northern Europe and areas of
+          Latin America stand out as leaders in renewable energy use, while North American, Asian, African, and Middle Eastern nations lag behind.</li>
+    </ul>
+
+    <h3>Look-back &amp; Next Steps</h3>
+    <ul class="tight">
+      <li>Our analysis uses <strong>country-level data</strong> to draw relationships, but sectoral, regional, cultural, and sub-national
+          breakdowns would better reveal where decarbonization is actually occurring, allowing us to identify the features
+          that cause renewable energy growth to be stronger in some areas.</li>
+      <li>The S-curve fits are simple, and noisy, particularly with matured technologies. Integrating <strong>uncertainty bands</strong>
+          may help give a stronger prediction of future growth, as well as including relevant policy/event markers for each.</li>
+      <li>We treat “renewables” as a single category in some areas. Identifying firm versus
+          variable renewables (i.e. Solar vs Nuclear), and creating more in-depth breakdowns for each country would help
+          us find the specific growth by renewable type.</li>
+      <li>Future work could combine the visualizations with more complex <strong>statistical models</strong>
+          and alternative data for unseen drivers such as policy, fuel prices, and total investment flows to move from simple
+          correlation toward a more complete explanation of the green energy transition globally.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  J Wong, G Gulati, N Wible — DS4200, Fall '25
+</footer>
+
+<!--  tab log for d3  -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const sections = document.querySelectorAll("main .section");
+  const navLinks = document.querySelectorAll(".nav-links a");
+
+  function showSection(id) {
+    sections.forEach(section => {
+      section.classList.toggle("active-section", section.id === id);
+    });
+
+    navLinks.forEach(link => {
+      const linkId = link.getAttribute("href").replace("#", "");
+      link.classList.toggle("active", linkId === id);
+    });
+
+    window.location.hash = id;
+  }
+
+  // nav
+  for (let i = 0; i < navLinks.length; i++) {
+    navLinks[i].addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = this.getAttribute("href").split("#")[1];
+      if (target) showSection(target);
+    });
+  }
+
+  // init sect(hash fb)
+  const hash = window.location.hash ? window.location.hash.slice(1) : "introduction";
+  const defaultId = document.getElementById(hash) ? hash : "introduction";
+  showSection(defaultId);
+
+  // patch for D3 bg
+  const d3Map = document.querySelector("iframe.d3-frame");
+  if (d3Map) {
+    d3Map.onload = function () {
+      try {
+        const innerDoc = d3Map.contentDocument || d3Map.contentWindow.document;
+        if (innerDoc && innerDoc.body) {
+          innerDoc.body.style.background = "#fff";
+          innerDoc.body.style.color = "#111";
+          const svg = innerDoc.querySelector("svg");
+          if (svg) svg.style.background = "#fff";
+        }
+      } catch (err) {
+        console.log("iframe restyle error:", err);
+      }
+    };
+  }
+});
+</script>

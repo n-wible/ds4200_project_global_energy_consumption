@@ -1,0 +1,213 @@
+/* === Base Theme === */
+:root {
+  --bg: #0b1120;
+  --bg-light: #1c2331;
+  --text: #f1f5f9;
+  --muted: #9ca3af;
+  --accent: #22c55e;
+  --accent-bg: rgba(34, 197, 94, 0.15);
+  --border: #2c3344;
+  --font: system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font);
+  background: radial-gradient(circle at top, #0b1120 0%, #0b1120 100%);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* === Typography === */
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  margin: 0.4rem 0 0.75rem;
+}
+
+code {
+  font-family: ui-monospace, monospace;
+  background: #1c1c1c;
+  font-size: 0.9em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+}
+
+/* === Layout === */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(11, 17, 32, 0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.navbar {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  font-weight: 600;
+}
+
+.nav-subtitle {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.nav-links a {
+  margin-left: 1rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  padding-bottom: 0.15rem;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+.nav-links a.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent-bg);
+}
+
+.main {
+  max-width: 1100px;
+  margin: 1.5rem auto 3rem;
+  padding: 0 1.5rem;
+}
+
+/* === Sections (Tab Containers) === */
+.section {
+  display: none;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.section.active-section {
+  display: block;
+}
+
+.section h1 {
+  margin-top: 0;
+  font-size: 1.6rem;
+}
+
+.section h2 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+
+/* === Components & Utilities === */
+.muted {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.chip {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: var(--bg);
+}
+
+.chip.accent {
+  background: var(--accent-bg);
+  border-color: var(--accent-bg);
+  color: var(--accent);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 2fr 1.4fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === Visualization Frames === */
+.viz-frame {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin-top: 0.75rem;
+}
+
+.viz-frame iframe {
+  width: 100%;
+  height: 950px;
+  min-height: 650px;
+  border: none;
+  display: block;
+}
+
+.viz-frame iframe.d3-frame {
+  height: 800px;
+  min-height: 600px;
+}
+
+.note {
+  font-size: 0.86rem;
+  color: var(--muted);
+  border-left: 3px solid var(--accent-bg);
+  padding-left: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+/* === Lists === */
+ul.tight,
+ol.tight {
+  padding-left: 1.25rem;
+}
+
+ul.tight li,
+ol.tight li {
+  margin-bottom: 0.35rem;
+}
+
+/* === Footer === */
+footer {
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 1.4rem 1.5rem;
+}
