@@ -1,4 +1,4 @@
-/* === Base Theme === */
+/* root theme */
 :root {
   --bg: #0b1120;
   --bg-light: #1c2331;
@@ -24,7 +24,7 @@ body {
   min-height: 100vh;
 }
 
-/* === Typography === */
+/* typograph */
 a {
   color: var(--accent);
   text-decoration: none;
@@ -46,7 +46,7 @@ code {
   border-radius: 0.25rem;
 }
 
-/* === Layout === */
+/* page lay */
 header {
   position: sticky;
   top: 0;
@@ -57,7 +57,7 @@ header {
 }
 
 .navbar {
-  max-width: 1100px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0.75rem 1.5rem;
   display: flex;
@@ -92,12 +92,12 @@ header {
 }
 
 .main {
-  max-width: 1100px;
+  max-width: 1350px;
   margin: 1.5rem auto 3rem;
   padding: 0 1.5rem;
 }
 
-/* === Sections (Tab Containers) === */
+/* tabs */
 .section {
   display: none;
   background: var(--bg-light);
@@ -121,7 +121,7 @@ header {
   font-size: 1.25rem;
 }
 
-/* === Components & Utilities === */
+/* chp for plt type */
 .muted {
   color: var(--muted);
   font-size: 0.88rem;
@@ -161,7 +161,7 @@ header {
   }
 }
 
-/* === Visualization Frames === */
+/* graph frames */
 .viz-frame {
   background: var(--bg-light);
   border: 1px solid var(--border);
@@ -191,7 +191,7 @@ header {
   margin-top: 0.75rem;
 }
 
-/* === Lists === */
+/* tighten paragraphs/list */
 ul.tight,
 ol.tight {
   padding-left: 1.25rem;
@@ -202,7 +202,7 @@ ol.tight li {
   margin-bottom: 0.35rem;
 }
 
-/* === Footer === */
+/* footer */
 footer {
   border-top: 1px solid var(--border);
   background: var(--bg);
